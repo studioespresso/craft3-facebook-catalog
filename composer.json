@@ -1,0 +1,40 @@
+{
+    "name": "studioespresso/craft-products-facebook",
+    "description": "Link your products with your Facebook page",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "products feed - facebook"
+    ],
+    "support": {
+        "docs": "https://github.com/studioespresso/products-feed-facebook/blob/master/README.md",
+        "issues": "https://github.com/studioespresso/products-feed-facebook/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Studio Espresso",
+            "homepage": "https://studioespresso.co/en"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "studioespresso\\productsfeedfacebook\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Products feed - Facebook",
+        "handle": "products-feed-facebook",
+        "hasCpSettings": true,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/studioespresso/products-feed-facebook/master/CHANGELOG.md",
+        "class": "studioespresso\\productsfeedfacebook\\ProductsFeedFacebook"
+    }
+}
