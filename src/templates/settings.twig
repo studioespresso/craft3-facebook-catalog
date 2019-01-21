@@ -1,0 +1,80 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Products feed - Facebook plugin for Craft CMS 3.x
+ *
+ * Products feed - Facebook Settings.twig
+ *
+ * @author    Studio Espresso
+ * @copyright Copyright (c) 2019 Studio Espresso
+ * @link      https://studioespresso.co/en
+ * @package   ProductsFeedFacebook
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% set installed = craft.app.plugins.isPluginInstalled('commerce') %}
+
+{% if installed %}
+    <h2>{{ 'Feed url' }}</h2>
+    {{ forms.textField({
+        label: 'Enter a URL for your products feed',
+        id: 'productsFeed',
+        name: 'productsFeed',
+        value: settings['productsFeed']}) }}
+
+    <h2>{{ 'Map your product fields'|t('products-feed-facebook') }}</h2>
+    {% set availableFields = {
+        '' : '---',
+        'title' : 'Title',
+        'sku' : 'SKU'
+    } %}
+    {% for id, field in fields %}
+        {% set availableFields = availableFields|merge([{
+            'label': field.name,
+            'value': id
+        }]) %}
+    {% endfor %}
+    {{ forms.selectField({
+        label: "Product id"|t('products-feed-facebook'),
+        id: "id",
+        name: "id",
+        required: true,
+        options: availableFields,
+        value: settings['id'] ? settings['id'] : 'sku',
+        errors: settings.errors and settings.errors['id'] ? settings.errors['id']
+    }) }}
+
+    {{ forms.selectField({
+        label: "Product title"|t('products-feed-facebook'),
+        id: "title",
+        name: "title",
+        required: true,
+        options: availableFields,
+        value: settings['title'] ? settings['title'] : 'title',
+        errors: settings.errors and settings.errors['title'] ? settings.errors['title']
+    }) }}
+
+    {{ forms.selectField({
+        label: "Product description"|t('products-feed-facebook'),
+        id: "description",
+        name: "description",
+        required: true,
+        options: availableFields,
+        value: settings['description'],
+        errors: settings.errors and settings.errors['description'] ? settings.errors['description']
+    }) }}
+
+    {{ forms.selectField({
+        label: "Image field"|t('products-feed-facebook'),
+        id: "image_link",
+        name: "image_link",
+        required: true,
+        options: availableFields,
+        value: settings['image_link'],
+        errors: settings.errors and settings.errors['image_link'] ? settings.errors['image_link']
+    }) }}
+
+{% endif %}

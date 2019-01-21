@@ -10,17 +10,15 @@
 
 namespace studioespresso\productsfeedfacebook;
 
-use studioespresso\productsfeedfacebook\variables\ProductsFeedFacebookVariable;
-use studioespresso\productsfeedfacebook\models\Settings;
-
 use Craft;
 use craft\base\Plugin;
-use craft\services\Plugins;
-use craft\events\PluginEvent;
-use craft\web\UrlManager;
-use craft\web\twig\variables\CraftVariable;
 use craft\events\RegisterUrlRulesEvent;
-
+use craft\web\twig\variables\CraftVariable;
+use craft\web\UrlManager;
+use studioespresso\productsfeedfacebook\models\Settings;
+use studioespresso\productsfeedfacebook\services\ElementsService;
+use studioespresso\productsfeedfacebook\variables\ProductsFeedFacebookVariable;
+use craft\commerce\Plugin as CommercePlugin;
 use yii\base\Event;
 
 /**
@@ -30,6 +28,7 @@ use yii\base\Event;
  * @package   ProductsFeedFacebook
  * @since     1.0.0
  *
+ * @property ElementsService $elements
  */
 class ProductsFeedFacebook extends Plugin
 {
@@ -48,24 +47,8 @@ class ProductsFeedFacebook extends Plugin
         parent::init();
         self::$plugin = $this;
 
-        Event::on(
-            UrlManager::class,
-            UrlManager::EVENT_REGISTER_SITE_URL_RULES,
-            function (RegisterUrlRulesEvent $event) {
-                $event->rules[$this->getSettings()->productsFeed] = 'products-feed-facebook/feed';
-            }
-        );
-        
-        Event::on(
-            CraftVariable::class,
-            CraftVariable::EVENT_INIT,
-            function (Event $event) {
-                /** @var CraftVariable $variable */
-                $variable = $event->sender;
-                $variable->set('productsFeedFacebook', ProductsFeedFacebookVariable::class);
-            }
-        );
-        
+        $this->_registerRoutes();
+        $this->_registerVariables();
     }
 
     // Protected Methods
@@ -83,11 +66,43 @@ class ProductsFeedFacebook extends Plugin
      */
     protected function settingsHtml(): string
     {
+        $fields = array_map(function($field) {
+            return $fields[$field->id] = $field->name;
+        }, Craft::$app->getFields()->getAllFields());
         return Craft::$app->view->renderTemplate(
             'products-feed-facebook/settings',
             [
-                'settings' => $this->getSettings()
+                'settings' => $this->getSettings(),
+                'fields' => Craft::$app->getFields()->getAllFields()
             ]
+        );
+    }
+
+    // Private Methods
+    // =========================================================================
+    private function _registerRoutes()
+    {
+        if (Craft::$app->getPlugins()->isPluginEnabled('commerce')) {
+            Event::on(
+                UrlManager::class,
+                UrlManager::EVENT_REGISTER_SITE_URL_RULES,
+                function (RegisterUrlRulesEvent $event) {
+                    $event->rules[$this->getSettings()->productsFeed] = 'products-feed-facebook/feed';
+                }
+            );
+        }
+    }
+
+    private function _registerVariables()
+    {
+        Event::on(
+            CraftVariable::class,
+            CraftVariable::EVENT_INIT,
+            function (Event $event) {
+                /** @var CraftVariable $variable */
+                $variable = $event->sender;
+                $variable->set('productsFeedFacebook', ProductsFeedFacebookVariable::class);
+            }
         );
     }
 }

@@ -30,6 +30,16 @@ class Settings extends Model
      */
     public $productsFeed = '/feeds/products/facebook';
 
+    public $id;
+
+    public $title;
+
+    public $availability;
+
+    public $description;
+
+    public $image_link;
+
     // Public Methods
     // =========================================================================
 
@@ -39,8 +49,9 @@ class Settings extends Model
     public function rules()
     {
         return [
-            ['productsFeed', 'string'],
-            ['productsFeed', 'default', 'value' => '/feeds/products/facebook'],
+            ['productsFeed', 'required'],
+            ['description', 'required'],
+            ['image_link', 'required'],
         ];
     }
 }
