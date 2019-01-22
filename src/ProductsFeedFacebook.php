@@ -101,7 +101,7 @@ class ProductsFeedFacebook extends Plugin
             function (Event $event) {
                 /** @var CraftVariable $variable */
                 $variable = $event->sender;
-                $variable->set('productsFeedFacebook', ProductsFeedFacebookVariable::class);
+                $variable->set('facebookCatalog', ProductsFeedFacebookVariable::class);
             }
         );
     }
