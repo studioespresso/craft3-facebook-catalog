@@ -32,9 +32,9 @@
                 {% endif %}
                 {% if craft.commerce.paymentCurrencies.getAllPaymentCurrencies()|length == 1 %}
                     {% set currency = craft.commerce.paymentCurrencies.getPrimaryPaymentCurrencyIso() %}
-                    <g:price>{{ product.defaultVariant.price|commerceCurrency(currency,convert=true,format=true) }} {{ currency }}</g:price>
+                    <g:price>{{ product.defaultVariant.price }} {{ currency }}</g:price>
                 {% else %}
-                    <g:price>{{ product.defaultVariant.price|commerceCurrency(settings.currencyIso,convert=true,format=true) }} {{ settings.currencyIso }}</g:price>
+                    <g:price>{{ product.defaultVariant.price }} {{ settings.currencyIso }}</g:price>
                 {% endif %}
             </item>
         {% endfor %}
