@@ -77,6 +77,25 @@
         errors: settings.errors and settings.errors['image_link'] ? settings.errors['image_link']
     }) }}
 
+
+    {% if craft.commerce.paymentCurrencies.getAllPaymentCurrencies()|length > 1 %}
+        {% set currencies = [] %}
+        {% for currency in craft.commerce.paymentCurrencies.getAllPaymentCurrencies() %}
+            {% set currencies = currencies|merge([{
+                'label': currency.iso,
+                'value': currency.iso
+            }]) %}
+        {% endfor %}
+        {{ forms.selectField({
+            label: "Image field"|t('products-feed-facebook'),
+            id: "currencyIso",
+            name: "currencyIso",
+            required: true,
+            options: currencies,
+            value: settings['currencyIso'],
+            errors: settings.errors and settings.errors['currencyIso'] ? settings.errors['currencyIso']
+        }) }}
+    {% endif %}
 {% else %}
     <h2>{{ 'Craft Commerce not installed'|t }}</h2>
 {% endif %}

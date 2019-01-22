@@ -40,6 +40,8 @@ class Settings extends Model
 
     public $image_link;
 
+    public $currencyIso;
+
     // Public Methods
     // =========================================================================
 

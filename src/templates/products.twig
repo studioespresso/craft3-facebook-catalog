@@ -21,11 +21,21 @@
                 <g:title>{{ attribute(product, settings.title) }}</g:title>
                 <g:description>{{ attribute(product, settings.description) }}</g:description>
                 <g:link>{{ product.getUrl() }}</g:link>
-                <g:image_link>http://images.example.com/DB_1.png</g:image_link>
+                {% set imageLink = attribute(product, settings.image_link) %}
+                {% if imageLink|length %}
+                    <g:image_link>{{ imageLink.one().getUrl() }}</g:image_link>
+                {% endif %}
                 <g:brand>Example</g:brand>
                 <g:condition>new</g:condition>
-                <g:availability>in stock</g:availability>
-                <g:price>{{ product.defaultVariant.price }} GBP</g:price>
+                {% if product.defaultVariant.hasUnlimitedStock %}
+                    <g:availability>in stock</g:availability>
+                {% endif %}
+                {% if craft.commerce.paymentCurrencies.getAllPaymentCurrencies()|length == 1 %}
+                    {% set currency = craft.commerce.paymentCurrencies.getPrimaryPaymentCurrencyIso() %}
+                    <g:price>{{ product.defaultVariant.price|commerceCurrency(currency,convert=true,format=true) }} {{ currency }}</g:price>
+                {% else %}
+                    <g:price>{{ product.defaultVariant.price|commerceCurrency(settings.currencyIso,convert=true,format=true) }} {{ settings.currencyIso }}</g:price>
+                {% endif %}
             </item>
         {% endfor %}
     </channel>
