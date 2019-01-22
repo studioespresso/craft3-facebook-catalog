@@ -35,6 +35,9 @@
         "hasCpSettings": true,
         "hasCpSection": false,
         "changelogUrl": "https://raw.githubusercontent.com/studioespresso/products-feed-facebook/master/CHANGELOG.md",
+        "components": {
+            "elements": "studioespresso\\productsfeedfacebook\\services\\ElementsService"
+        },
         "class": "studioespresso\\productsfeedfacebook\\ProductsFeedFacebook"
     }
 }

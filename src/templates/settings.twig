@@ -34,7 +34,7 @@
     {% for id, field in fields %}
         {% set availableFields = availableFields|merge([{
             'label': field.name,
-            'value': id
+            'value': field.handle
         }]) %}
     {% endfor %}
     {{ forms.selectField({
@@ -77,4 +77,6 @@
         errors: settings.errors and settings.errors['image_link'] ? settings.errors['image_link']
     }) }}
 
+{% else %}
+    <h2>{{ 'Craft Commerce not installed'|t }}</h2>
 {% endif %}
