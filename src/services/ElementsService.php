@@ -13,7 +13,7 @@ class ElementsService extends Component
         if ($query) {
             $products = $query->all();
         } else {
-            $products = Product::find()->limit(1)->all();
+            $products = Product::find()->limit(null)->all();
         }
         return $products;
     }
