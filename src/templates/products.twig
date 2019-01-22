@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+    <channel>
+        <title>Test Store</title>
+        <link>
+        http://www.example.com</link>
+        <description>An example item from the feed</description>
+        {% for product in products %}
+            <item>
+                <g:id>
+                    {% if settings.id == 'sku' %}
+                        {{ product.defaultVariant.sku }}
+                    {% else %}
+                        {% if attribute(product, settings.id) is defined %}
+                            {{ attribute(product, settings.id) }}
+                        {% elseif attribute(product.defaultVariant, settings.id) is defined %}
+                            {{ attribute(product.defaultVariant, settings.id) }}
+                        {% endif %}
+                    {% endif %}
+                </g:id>
+                <g:title>{{ attribute(product, settings.title) }}</g:title>
+                <g:description>{{ attribute(product, settings.description) }}</g:description>
+                <g:link>{{ product.getUrl() }}</g:link>
+                <g:image_link>http://images.example.com/DB_1.png</g:image_link>
+                <g:brand>Example</g:brand>
+                <g:condition>new</g:condition>
+                <g:availability>in stock</g:availability>
+                <g:price>{{ product.defaultVariant.price }} GBP</g:price>
+            </item>
+        {% endfor %}
+    </channel>
+</rss>
