@@ -6,7 +6,7 @@ Link your products with your Facebook page
 
 This plugin requires Craft CMS 3.0.0 or later, and works out of the box when you have [Craft Commerce](http://plugins.craftcms.com/commerce) installed.
 
-If you want to use the plugin without commerce and/or with regular entries, have a look at the [Twig functions](#Twig Functions) 
+If you want to use the plugin without commerce and/or with regular entries, have a look at the [Twig functions](#twig-function) 
 
 ## Installation
 
