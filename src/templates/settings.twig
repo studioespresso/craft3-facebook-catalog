@@ -25,8 +25,29 @@
         name: 'productsFeed',
         value: settings['productsFeed']}) }}
 
+    {% if craft.app.sites.getAllSites() > 1 %}
+        {% set availableSites = [] %}
+        {% for id, site in craft.app.sites.getAllSites() %}
+            {% set availableSites = availableSites|merge([{
+                'label': site.name,
+                'value': site.id
+            }]) %}
+        {% endfor %}
+        {{ forms.selectField({
+            label: "To which site should your products link?"|t('facebook-catalog'),
+            id: "siteId",
+            name: "siteId",
+            required: true,
+            options: availableSites,
+            value: settings['siteId'] ? settings['siteId'],
+            errors: settings.errors and settings.errors['siteId'] ? settings.errors['siteId']
+        }) }}
+    {% endif %}
+
     <h2>{{ 'Map your product fields'|t('facebook-catalog') }}</h2>
     <p>{{ 'Note that each of these fields (for each product) are required for your Facebook Catalog to be valid.'|t('facebook-catalog') }}</p>
+
+
     {% set availableFields = {
         '' : '---',
         'title' : 'Title',

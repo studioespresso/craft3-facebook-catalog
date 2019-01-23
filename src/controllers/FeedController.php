@@ -42,11 +42,13 @@ class FeedController extends Controller
      */
     public function actionIndex()
     {
-        $products = FacebookCatalog::$plugin->elements->getProducts();
+        $settings = FacebookCatalog::getInstance()->getSettings();
+        $products = FacebookCatalog::$plugin->elements->getProducts(null, $settings);
         Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
+
         return $this->renderTemplate('facebook-catalog/products', [
             'products' => $products,
-            'settings' => FacebookCatalog::getInstance()->getSettings()
+            'settings' => $settings
         ]);
     }
 

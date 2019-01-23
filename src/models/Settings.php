@@ -32,6 +32,8 @@ class Settings extends Model
 
     public $id;
 
+    public $siteId;
+
     public $title;
 
     public $availability;
