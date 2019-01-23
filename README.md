@@ -30,5 +30,17 @@ The function takes an `ElementQuery` object (not the result, the query itself) a
        {% set products = craft.products.limit(1) %}
        {{ craft.catalog.render(products) }}
 
+The second parameter of the `render()` function should be an array that contains these field names and the names of the entry fields to which you want to map them.
+       
+       {{ craft.catalog.render(products, {
+            title: 'fieldHandle',
+            id: 'fieldHandle',
+            description: 'fieldHandle',
+            image_link: 'fieldHandle',
+            brand: 'fieldHandle',
+            price: 'fieldHandle',
+            currency: 'USD' // ISO code of the currency you want to use
+       }) }}
 
+---
 Brought to you by [Studio Espresso](https://studioespresso.co/en)
