@@ -34,7 +34,6 @@
         "handle": "facebook-catalog",
         "hasCpSettings": true,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/studioespresso/facebook-catalog/master/CHANGELOG.md",
         "components": {
             "elements": "studioespresso\\facebookcatalog\\services\\ElementsService"
         },
