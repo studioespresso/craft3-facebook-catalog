@@ -1,6 +1,6 @@
 <?php
 /**
- * Products feed - Facebook plugin for Craft CMS 3.x
+ * Facebook Catalog plugin for Craft CMS 3.x
  *
  * Link your products with your Facebook page
  *
@@ -8,16 +8,16 @@
  * @copyright Copyright (c) 2019 Studio Espresso
  */
 
-namespace studioespresso\productsfeedfacebook\models;
+namespace studioespresso\facebookcatalog\models;
 
-use studioespresso\productsfeedfacebook\ProductsFeedFacebook;
+use studioespresso\facebookcatalog\FacebookCatalog;
 
 use Craft;
 use craft\base\Model;
 
 /**
  * @author    Studio Espresso
- * @package   ProductsFeedFacebook
+ * @package   FacebookCatalog
  * @since     1.0.0
  */
 class Settings extends Model

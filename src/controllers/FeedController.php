@@ -1,6 +1,6 @@
 <?php
 /**
- * Products feed - Facebook plugin for Craft CMS 3.x
+ * Facebook Catalog plugin for Craft CMS 3.x
  *
  * Link your products with your Facebook page
  *
@@ -8,17 +8,17 @@
  * @copyright Copyright (c) 2019 Studio Espresso
  */
 
-namespace studioespresso\productsfeedfacebook\controllers;
+namespace studioespresso\facebookcatalog\controllers;
 
 use craft\web\View;
-use studioespresso\productsfeedfacebook\ProductsFeedFacebook;
+use studioespresso\facebookcatalog\FacebookCatalog;
 
 use Craft;
 use craft\web\Controller;
 
 /**
  * @author    Studio Espresso
- * @package   ProductsFeedFacebook
+ * @package   FacebookCatalog
  * @since     1.0.0
  */
 class FeedController extends Controller
@@ -42,11 +42,11 @@ class FeedController extends Controller
      */
     public function actionIndex()
     {
-        $products = ProductsFeedFacebook::$plugin->elements->getProducts();
+        $products = FacebookCatalog::$plugin->elements->getProducts();
         Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
-        return $this->renderTemplate('products-feed-facebook/products', [
+        return $this->renderTemplate('facebook-catalog/products', [
             'products' => $products,
-            'settings' => ProductsFeedFacebook::getInstance()->getSettings()
+            'settings' => FacebookCatalog::getInstance()->getSettings()
         ]);
     }
 

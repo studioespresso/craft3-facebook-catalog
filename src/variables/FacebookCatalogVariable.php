@@ -1,6 +1,6 @@
 <?php
 /**
- * Products feed - Facebook plugin for Craft CMS 3.x
+ * Facebook Catalog plugin for Craft CMS 3.x
  *
  * Link your products with your Facebook page
  *
@@ -8,20 +8,20 @@
  * @copyright Copyright (c) 2019 Studio Espresso
  */
 
-namespace studioespresso\productsfeedfacebook\variables;
+namespace studioespresso\facebookcatalog\variables;
 
 use craft\elements\db\ElementQuery;
 use craft\web\View;
-use studioespresso\productsfeedfacebook\ProductsFeedFacebook;
+use studioespresso\facebookcatalog\FacebookCatalog;
 
 use Craft;
 
 /**
  * @author    Studio Espresso
- * @package   ProductsFeedFacebook
+ * @package   FacebookCatalog
  * @since     1.0.0
  */
-class ProductsFeedFacebookVariable
+class FacebookCatalogVariable
 {
     // Public Methods
     // =========================================================================
@@ -31,10 +31,10 @@ class ProductsFeedFacebookVariable
             return false;
         }
         if(!$fields) {
-            $fields = ProductsFeedFacebook::getInstance()->getSettings();
+            $fields = FacebookCatalog::getInstance()->getSettings();
         }
         Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
-        $feed =  Craft::$app->view->renderTemplate('products-feed-facebook/products', [
+        $feed =  Craft::$app->view->renderTemplate('facebook-catalog/products', [
             'products' => $query->all(),
             'settings' => $fields,
         ]);

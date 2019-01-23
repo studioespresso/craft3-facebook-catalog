@@ -22,4 +22,11 @@ To install the plugin, follow these instructions.
 ## Twig function
 If you want to use the plugin with regular entries, want to provide your own Element query or want to have mulitple feeds, have a look at these function.
 
+### craft.facebookCatalog.render
+The function takes an `ElementQuery` object (not the result, the query itself) and it applies
+
+       {% set products = craft.products.limit(1) %}
+       {{ craft.facebookCatalog.render(products) }}
+
+
 Brought to you by [Studio Espresso](https://studioespresso.co/en)

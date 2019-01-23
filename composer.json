@@ -1,5 +1,5 @@
 {
-    "name": "studioespresso/craft-products-facebook",
+    "name": "studioespresso/craft-facebook-catalog",
     "description": "Link your products with your Facebook page",
     "type": "craft-plugin",
     "version": "1.0.0",
@@ -11,8 +11,8 @@
         "products feed - facebook"
     ],
     "support": {
-        "docs": "https://github.com/studioespresso/products-feed-facebook/blob/master/README.md",
-        "issues": "https://github.com/studioespresso/products-feed-facebook/issues"
+        "docs": "https://github.com/studioespresso/craft3-facebook-catalog/blob/master/README.md",
+        "issues": "https://github.com/studioespresso/craft3-facebook-catalog/issues"
     },
     "license": "MIT",
     "authors": [
@@ -26,18 +26,18 @@
     },
     "autoload": {
         "psr-4": {
-          "studioespresso\\productsfeedfacebook\\": "src/"
+          "studioespresso\\facebookcatalog\\": "src/"
         }
     },
     "extra": {
         "name": "Facebook Product Catalog",
-        "handle": "products-feed-facebook",
+        "handle": "facebook-catalog",
         "hasCpSettings": true,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/studioespresso/products-feed-facebook/master/CHANGELOG.md",
+        "changelogUrl": "https://raw.githubusercontent.com/studioespresso/facebook-catalog/master/CHANGELOG.md",
         "components": {
-            "elements": "studioespresso\\productsfeedfacebook\\services\\ElementsService"
+            "elements": "studioespresso\\facebookcatalog\\services\\ElementsService"
         },
-        "class": "studioespresso\\productsfeedfacebook\\ProductsFeedFacebook"
+        "class": "studioespresso\\facebookcatalog\\FacebookCatalog"
     }
 }

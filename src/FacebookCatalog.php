@@ -1,6 +1,6 @@
 <?php
 /**
- * Products feed - Facebook plugin for Craft CMS 3.x
+ * Facebook Catalog plugin for Craft CMS 3.x
  *
  * Link your products with your Facebook page
  *
@@ -8,29 +8,29 @@
  * @copyright Copyright (c) 2019 Studio Espresso
  */
 
-namespace studioespresso\productsfeedfacebook;
+namespace studioespresso\facebookcatalog;
 
 use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterUrlRulesEvent;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\UrlManager;
-use studioespresso\productsfeedfacebook\models\Settings;
-use studioespresso\productsfeedfacebook\services\ElementsService;
-use studioespresso\productsfeedfacebook\variables\ProductsFeedFacebookVariable;
+use studioespresso\facebookcatalog\models\Settings;
+use studioespresso\facebookcatalog\services\ElementsService;
+use studioespresso\facebookcatalog\variables\FacebookCatalogVariable;
 use craft\commerce\Plugin as CommercePlugin;
 use yii\base\Event;
 
 /**
- * Class ProductsFeedFacebook
+ * Class FacebookCatalog
  *
  * @author    Studio Espresso
- * @package   ProductsFeedFacebook
+ * @package   FacebookCatalog
  * @since     1.0.0
  *
  * @property ElementsService $elements
  */
-class ProductsFeedFacebook extends Plugin
+class FacebookCatalog extends Plugin
 {
     // Static Properties
     // =========================================================================
@@ -70,7 +70,7 @@ class ProductsFeedFacebook extends Plugin
             return $fields[$field->id] = $field->name;
         }, Craft::$app->getFields()->getAllFields());
         return Craft::$app->view->renderTemplate(
-            'products-feed-facebook/settings',
+            'facebook-catalog/settings',
             [
                 'settings' => $this->getSettings(),
                 'fields' => Craft::$app->getFields()->getAllFields()
@@ -87,7 +87,7 @@ class ProductsFeedFacebook extends Plugin
                 UrlManager::class,
                 UrlManager::EVENT_REGISTER_SITE_URL_RULES,
                 function (RegisterUrlRulesEvent $event) {
-                    $event->rules[$this->getSettings()->productsFeed] = 'products-feed-facebook/feed';
+                    $event->rules[$this->getSettings()->productsFeed] = 'facebook-catalog/feed';
                 }
             );
         }
@@ -101,7 +101,7 @@ class ProductsFeedFacebook extends Plugin
             function (Event $event) {
                 /** @var CraftVariable $variable */
                 $variable = $event->sender;
-                $variable->set('facebookCatalog', ProductsFeedFacebookVariable::class);
+                $variable->set('facebookCatalog', FacebookCatalogVariable::class);
             }
         );
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace studioespresso\productsfeedfacebook\services;
+namespace studioespresso\facebookcatalog\services;
 
 use craft\base\Component;
 use craft\commerce\elements\Product;
