@@ -15,18 +15,17 @@ To install the plugin, follow these instructions.
 1. Open your terminal and go to your Craft project:
 
         cd /path/to/project
-
-2. Then tell Composer to load the plugin:
-
+        composer require studioespresso/craft-facebook-catalog
+        ./craft install/plugin craft-facebook-catalog
 
 ## Twig function
 If you want to use the plugin with regular entries, want to provide your own Element query or want to have mulitple feeds, have a look at these function.
 
-### craft.facebookCatalog.render
+### craft.catalog.render
 The function takes an `ElementQuery` object (not the result, the query itself) and it applies
 
        {% set products = craft.products.limit(1) %}
-       {{ craft.facebookCatalog.render(products) }}
+       {{ craft.catalog.render(products) }}
 
 
 Brought to you by [Studio Espresso](https://studioespresso.co/en)

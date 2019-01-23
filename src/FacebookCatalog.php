@@ -101,7 +101,7 @@ class FacebookCatalog extends Plugin
             function (Event $event) {
                 /** @var CraftVariable $variable */
                 $variable = $event->sender;
-                $variable->set('facebookCatalog', FacebookCatalogVariable::class);
+                $variable->set('catalog', FacebookCatalogVariable::class);
             }
         );
     }
