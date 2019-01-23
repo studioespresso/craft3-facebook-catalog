@@ -42,6 +42,8 @@ class Settings extends Model
 
     public $image_link;
 
+    public $brand;
+
     public $currencyIso;
 
     // Public Methods
@@ -56,6 +58,7 @@ class Settings extends Model
             ['productsFeed', 'required'],
             ['description', 'required'],
             ['image_link', 'required'],
+            ['brand', 'required'],
         ];
     }
 }

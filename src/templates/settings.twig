@@ -40,7 +40,7 @@
             required: true,
             options: availableSites,
             value: settings['siteId'] ? settings['siteId'],
-            errors: settings.errors and settings.errors['siteId'] ? settings.errors['siteId']
+            errors: settings.errors and settings.errors['siteId'] is defined ? settings.errors['siteId']
         }) }}
     {% endif %}
 
@@ -66,7 +66,7 @@
         required: true,
         options: availableFields,
         value: settings['id'] ? settings['id'] : 'sku',
-        errors: settings.errors and settings.errors['id'] ? settings.errors['id']
+        errors: settings.errors and settings.errors['id'] is defined ? settings.errors['id']
     }) }}
 
     {{ forms.selectField({
@@ -76,7 +76,17 @@
         required: true,
         options: availableFields,
         value: settings['title'] ? settings['title'] : 'title',
-        errors: settings.errors and settings.errors['title'] ? settings.errors['title']
+        errors: settings.errors and settings.errors['title'] is defined ? settings.errors['title']
+    }) }}
+
+    {{ forms.selectField({
+        label: "Brand"|t('facebook-catalog'),
+        id: "brand",
+        name: "brand",
+        required: true,
+        options: availableFields,
+        value: settings['brand'],
+        errors: settings.errors and settings.errors['brand'] is defined ? settings.errors['brand']
     }) }}
 
     {{ forms.selectField({
@@ -86,7 +96,7 @@
         required: true,
         options: availableFields,
         value: settings['description'],
-        errors: settings.errors and settings.errors['description'] ? settings.errors['description']
+        errors: settings.errors and settings.errors['description'] is defined ? settings.errors['description']
     }) }}
 
     {{ forms.selectField({
@@ -96,7 +106,7 @@
         required: true,
         options: availableFields,
         value: settings['image_link'],
-        errors: settings.errors and settings.errors['image_link'] ? settings.errors['image_link']
+        errors: settings.errors and settings.errors['image_link'] is defined ? settings.errors['image_link']
     }) }}
 
 
@@ -115,7 +125,7 @@
             required: true,
             options: currencies,
             value: settings['currencyIso'],
-            errors: settings.errors and settings.errors['currencyIso'] ? settings.errors['currencyIso']
+            errors: settings.errors and settings.errors['currencyIso'] is defined ? settings.errors['currencyIso']
         }) }}
     {% endif %}
 {% else %}

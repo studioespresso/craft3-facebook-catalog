@@ -21,7 +21,7 @@
                 {% if imageLink|length %}
                     <g:image_link>{{ imageLink.one().getUrl() }}</g:image_link>
                 {% endif %}
-                <g:brand>Example</g:brand>
+                <g:brand>{{ attribute(product, settings.brand) }}</g:brand>
                 <g:condition>new</g:condition>
                 {% if product.defaultVariant.hasUnlimitedStock %}
                     <g:availability>in stock</g:availability>
