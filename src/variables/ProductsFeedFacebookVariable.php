@@ -11,6 +11,7 @@
 namespace studioespresso\productsfeedfacebook\variables;
 
 use craft\elements\db\ElementQuery;
+use craft\web\View;
 use studioespresso\productsfeedfacebook\ProductsFeedFacebook;
 
 use Craft;
@@ -24,10 +25,21 @@ class ProductsFeedFacebookVariable
 {
     // Public Methods
     // =========================================================================
-    public function render(ElementQuery $query = null)
+    public function render(ElementQuery $query = null, array $fields = null)
     {
         if (!$query) {
             return false;
         }
+        if(!$fields) {
+            $fields = ProductsFeedFacebook::getInstance()->getSettings();
+        }
+        Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
+        $feed =  Craft::$app->view->renderTemplate('products-feed-facebook/products', [
+            'products' => $query->all(),
+            'settings' => $fields,
+        ]);
+
+        echo $feed;
+        exit;
     }
 }
