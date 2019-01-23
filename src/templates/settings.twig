@@ -18,40 +18,47 @@
 {% set installed = craft.app.plugins.isPluginInstalled('commerce') %}
 
 {% if installed %}
-    <h2>{{ 'Feed url' }}</h2>
-    {{ forms.textField({
-        label: 'Enter a URL for your products feed',
-        id: 'productsFeed',
-        name: 'productsFeed',
-        value: settings['productsFeed']}) }}
-
-    {% if craft.app.sites.getAllSites() > 1 %}
-        {% set availableSites = [] %}
-        {% for id, site in craft.app.sites.getAllSites() %}
-            {% set availableSites = availableSites|merge([{
-                'label': site.name,
-                'value': site.id
-            }]) %}
-        {% endfor %}
-        {{ forms.selectField({
-            label: "To which site should your products link?"|t('facebook-catalog'),
-            id: "siteId",
-            name: "siteId",
-            required: true,
-            options: availableSites,
-            value: settings['siteId'] ? settings['siteId'],
-            errors: settings.errors and settings.errors['siteId'] is defined ? settings.errors['siteId']
-        }) }}
-    {% endif %}
-
-    <h2>{{ 'Map your product fields'|t('facebook-catalog') }}</h2>
-    <p>{{ 'Note that each of these fields (for each product) are required for your Facebook Catalog to be valid.'|t('facebook-catalog') }}</p>
-
+    <div class="field">
+        <h2>{{ 'Feed url' }}</h2>
+        {{ forms.textField({
+            label: 'Enter a URL for your products feed',
+            id: 'productsFeed',
+            name: 'productsFeed',
+            value: settings['productsFeed']}) }}
+        {% if craft.app.sites.getAllSites() > 1 %}
+            {% set availableSites = [] %}
+            {% for id, site in craft.app.sites.getAllSites() %}
+                {% set availableSites = availableSites|merge([{
+                    'label': site.name,
+                    'value': site.id
+                }]) %}
+            {% endfor %}
+            {{ forms.selectField({
+                label: "To which site should your products link?"|t('facebook-catalog'),
+                id: "siteId",
+                name: "siteId",
+                required: true,
+                options: availableSites,
+                value: settings['siteId'] ? settings['siteId'],
+                errors: settings.errors and settings.errors['siteId'] is defined ? settings.errors['siteId']
+            }) }}
+        {% endif %}
+    </div>
+    <div class="field">
+        <div class="heading">
+            <h2>{{ 'Map your product fields'|t('facebook-catalog') }}</h2>
+            <div class="instructions">
+                <p>{{ 'Note that each of these fields (for each product) are required for your Facebook Catalog to be valid.'|t('facebook-catalog') }}</p>
+                <p>{{ "See facebook's documentation page on allow values & required fields <a href='{link}'>here</a>."|t({link: 'https://developers.facebook.com/docs/marketing-api/dynamic-product-ads/product-catalog/#required-fields'})|raw }}</p>
+            </div>
+        </div>
+    </div>
 
     {% set availableFields = {
         '' : '---',
         'title' : 'Title',
-        'sku' : 'SKU'
+        'sku' : 'SKU',
+        'id' : 'Entry ID'
     } %}
     {% for id, field in fields %}
         {% set availableFields = availableFields|merge([{

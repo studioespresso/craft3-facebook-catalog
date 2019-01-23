@@ -18,6 +18,9 @@ To install the plugin, follow these instructions.
         composer require studioespresso/craft-facebook-catalog
         ./craft install/plugin craft-facebook-catalog
 
+## Usage
+Out of the box, the plugin will give you 1 feed with all your Craft Commerce products. If you need more control over which products show up in the feed, or you want multiple feeds, have a look at the have a look at the [Twig functions](#twig-function). 
+
 ## Twig function
 If you want to use the plugin with regular entries, want to provide your own Element query or want to have mulitple feeds, have a look at these function.
 
