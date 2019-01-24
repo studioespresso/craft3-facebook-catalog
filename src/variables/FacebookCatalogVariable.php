@@ -15,6 +15,7 @@ use craft\web\View;
 use studioespresso\facebookcatalog\FacebookCatalog;
 
 use Craft;
+use yii\base\InvalidValueException;
 
 /**
  * @author    Studio Espresso
@@ -30,11 +31,11 @@ class FacebookCatalogVariable
         if (!$query) {
             return false;
         }
-        if(!$fields) {
+        if (!$fields) {
             $fields = FacebookCatalog::getInstance()->getSettings();
         }
         Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
-        $feed =  Craft::$app->view->renderTemplate('facebook-catalog/_products', [
+        $feed = Craft::$app->view->renderTemplate('facebook-catalog/_products', [
             'products' => $query->all(),
             'settings' => $fields,
         ]);
@@ -45,19 +46,48 @@ class FacebookCatalogVariable
 
     public function entries(ElementQuery $query = null, array $fields = null)
     {
+        if ($fields) {
+            $this->_validateFields($fields);
+        }
         if (!$query) {
             return false;
         }
-        if(!$fields) {
-            $fields = FacebookCatalog::getInstance()->getSettings();
-        }
-        Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
-        $feed =  Craft::$app->view->renderTemplate('facebook-catalog/_entries', [
-            'products' => $query->all(),
-            'settings' => $fields,
-        ]);
+    }
 
-        echo $feed;
-        exit;
+    public function _validateFields($fields)
+    {
+        $isValid = true;
+        if(!array_key_exists('title', $fields)) {
+            $isValid = false;
+        }
+        if(!array_key_exists('title', $fields)) {
+            $isValid = false;
+        }
+        if(!array_key_exists('id', $fields)) {
+            $isValid = false;
+        }
+        if(!array_key_exists('description', $fields)) {
+            $isValid = false;
+        }
+        if(!array_key_exists('image_link', $fields)) {
+            $isValid = false;
+        }
+        if(!array_key_exists('brand', $fields)) {
+            $isValid = false;
+        }
+        if(!array_key_exists('price', $fields)) {
+            $isValid = false;
+        }
+        if(!array_key_exists('currency', $fields)) {
+            $isValid = false;
+        }
+        if(!$isValid) {
+            if(Craft::$app->getConfig()->general->devMode) {
+                throw new InvalidValueException('Field settings incorrect');
+            } else {
+                return false;
+            }
+        }
+
     }
 }

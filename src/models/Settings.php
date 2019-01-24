@@ -38,7 +38,7 @@ class Settings extends Model
 
     public $price = 'price';
 
-    public $availability;
+    public $availability = 'in stock';
 
     public $description;
 

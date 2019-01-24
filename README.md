@@ -28,11 +28,13 @@ If you need more control over which products show up in the feed, or you want mu
 If you want to use the plugin with regular entries, want to provide your own Element query or want to have mulitple feeds, have a look at these function:
 
 ### Products - craft.catalog.products
+Works with any **Commerce Products** element query
 
        {% set products = craft.products.limit(1) %}
        {{ craft.catalog.products(query) }}
 
 ### Entries - craft.catalog.entries
+Works with any elment query
 
        {% set query = craft.entries.section('books') %}
        {{ craft.catalog.entries(query) }}
@@ -41,7 +43,7 @@ Both function take an `ElementQuery` as first parameter and will use the fields 
 
 An optional second parameter can be added with that contains these fixed field names and the names of the entry fields to which you want to map them.
        
-       {{ craft.catalog.render(products, {
+       {{ craft.catalog.entries(products, {
             title: 'fieldHandle',
             id: 'fieldHandle',
             description: 'fieldHandle',
