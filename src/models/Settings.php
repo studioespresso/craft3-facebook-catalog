@@ -30,11 +30,13 @@ class Settings extends Model
      */
     public $productsFeed = '/feeds/products/facebook';
 
-    public $id;
+    public $id = 'sku';
 
     public $siteId;
 
-    public $title;
+    public $title = 'title';
+
+    public $price = 'price';
 
     public $availability;
 

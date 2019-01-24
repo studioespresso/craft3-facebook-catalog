@@ -58,7 +58,8 @@
         '' : '---',
         'title' : 'Title',
         'sku' : 'SKU',
-        'id' : 'Entry ID'
+        'id' : 'Entry ID',
+        'price': 'Price',
     } %}
     {% for id, field in fields %}
         {% set availableFields = availableFields|merge([{
@@ -84,6 +85,16 @@
         options: availableFields,
         value: settings['title'] ? settings['title'] : 'title',
         errors: settings.errors and settings.errors['title'] is defined ? settings.errors['title']
+    }) }}
+
+    {{ forms.selectField({
+        label: "Product id"|t('facebook-catalog'),
+        id: "price",
+        name: "price",
+        required: true,
+        options: availableFields,
+        value: settings['price'] ? settings['price'] : 'price',
+        errors: settings.errors and settings.errors['price'] is defined ? settings.errors['price']
     }) }}
 
     {{ forms.selectField({
