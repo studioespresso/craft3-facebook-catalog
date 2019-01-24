@@ -19,18 +19,27 @@ To install the plugin, follow these instructions.
         ./craft install/plugin craft-facebook-catalog
 
 ## Usage
-Out of the box, the plugin will give you 1 feed with all your Craft Commerce products. If you need more control over which products show up in the feed, or you want multiple feeds, have a look at the have a look at the [Twig functions](#twig-function). 
+Out of the box, the plugin will give you 1 feed with all your Craft Commerce products, using the default variant for each product.
+
+If you need more control over which products show up in the feed, or you want multiple feeds, have a look at the have a look at the [Twig functions](#twig-function). 
+
 
 ## Twig function
-If you want to use the plugin with regular entries, want to provide your own Element query or want to have mulitple feeds, have a look at these function.
+If you want to use the plugin with regular entries, want to provide your own Element query or want to have mulitple feeds, have a look at these function:
 
-### craft.catalog.render
-The function takes an `ElementQuery` object (not the result, the query itself) and it applies
+### Products - craft.catalog.products
 
        {% set products = craft.products.limit(1) %}
-       {{ craft.catalog.render(products) }}
+       {{ craft.catalog.products(query) }}
 
-The second parameter of the `render()` function should be an array that contains these field names and the names of the entry fields to which you want to map them.
+### Entries - craft.catalog.entries
+
+       {% set query = craft.entries.section('books') %}
+       {{ craft.catalog.entries(query) }}
+
+Both function take an `ElementQuery` as first parameter and will use the fields mapped in the plugin settings.
+
+An optional second parameter can be added with that contains these fixed field names and the names of the entry fields to which you want to map them.
        
        {{ craft.catalog.render(products, {
             title: 'fieldHandle',
@@ -41,6 +50,8 @@ The second parameter of the `render()` function should be an array that contains
             price: 'fieldHandle',
             currency: 'USD' // ISO code of the currency you want to use
        }) }}
+
+If each of these fields are not pressent in the array, the feed will fail to validated and throw an expection. 
 
 ---
 Brought to you by [Studio Espresso](https://studioespresso.co/en)
