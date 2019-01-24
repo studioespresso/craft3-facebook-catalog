@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+    <channel>
+        {% for product in products %}
+            <item>
+                <g:id>
+                    {% if settings.id == 'sku' %}
+                        {{ product.defaultVariant.sku }}
+                    {% else %}
+                        {% if attribute(product, settings.id) is defined %}
+                            {{ attribute(product, settings.id) }}
+                        {% elseif attribute(product.defaultVariant, settings.id) is defined %}
+                            {{ attribute(product.defaultVariant, settings.id) }}
+                        {% endif %}
+                    {% endif %}
+                </g:id>
+                <g:title>{{ attribute(product, settings.title) }}</g:title>
+                <g:description>{{ attribute(product, settings.description) }}</g:description>
+                <g:link>{{ product.getUrl() }}</g:link>
+                {% set imageLink = attribute(product, settings.image_link) %}
+                {% if imageLink|length %}
+                    <g:image_link>{{ imageLink.one().getUrl() }}</g:image_link>
+                {% endif %}
+                <g:brand>{{ attribute(product, settings.brand) }}</g:brand>
+                <g:condition>new</g:condition>
+                {% if product.defaultVariant.hasUnlimitedStock %}
+                    <g:availability>in stock</g:availability>
+                {% endif %}
+                {% if craft.commerce.paymentCurrencies.getAllPaymentCurrencies()|length == 1 %}
+                    {% set currency = craft.commerce.paymentCurrencies.getPrimaryPaymentCurrencyIso() %}
+                    <g:price>{{ attribute(product.defaultVariant, settings.price) }} {{ currency }}</g:price>
+                {% else %}
+                    <g:price>{{ attribute(product.defaultVariant, settings.price) }} {{ settings.currencyIso }}</g:price>
+                {% endif %}
+            </item>
+        {% endfor %}
+    </channel>
+</rss>

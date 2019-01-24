@@ -46,7 +46,7 @@ class FeedController extends Controller
         $products = FacebookCatalog::$plugin->elements->getProducts(null, $settings);
         Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
 
-        return $this->renderTemplate('facebook-catalog/products', [
+        return $this->renderTemplate('facebook-catalog/_products', [
             'products' => $products,
             'settings' => $settings
         ]);

@@ -25,7 +25,7 @@ class FacebookCatalogVariable
 {
     // Public Methods
     // =========================================================================
-    public function render(ElementQuery $query = null, array $fields = null)
+    public function products(ElementQuery $query = null, array $fields = null)
     {
         if (!$query) {
             return false;
@@ -34,7 +34,25 @@ class FacebookCatalogVariable
             $fields = FacebookCatalog::getInstance()->getSettings();
         }
         Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
-        $feed =  Craft::$app->view->renderTemplate('facebook-catalog/products', [
+        $feed =  Craft::$app->view->renderTemplate('facebook-catalog/_products', [
+            'products' => $query->all(),
+            'settings' => $fields,
+        ]);
+
+        echo $feed;
+        exit;
+    }
+
+    public function entries(ElementQuery $query = null, array $fields = null)
+    {
+        if (!$query) {
+            return false;
+        }
+        if(!$fields) {
+            $fields = FacebookCatalog::getInstance()->getSettings();
+        }
+        Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
+        $feed =  Craft::$app->view->renderTemplate('facebook-catalog/_entries', [
             'products' => $query->all(),
             'settings' => $fields,
         ]);
