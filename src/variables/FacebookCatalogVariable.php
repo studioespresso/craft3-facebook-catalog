@@ -47,47 +47,55 @@ class FacebookCatalogVariable
     public function entries(ElementQuery $query = null, array $fields = null)
     {
         if ($fields) {
-            $this->_validateFields($fields);
+            if (!$this->_validateFields($fields)) {
+                if (Craft::$app->getConfig()->general->devMode) {
+                    throw new InvalidValueException('Field settings incorrect');
+                } else {
+                    return false;
+                }
+            }
         }
         if (!$query) {
             return false;
         }
+
+        Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
+        $feed = Craft::$app->view->renderTemplate('facebook-catalog/_entries', [
+            'entries' => $query->all(),
+            'settings' => $fields,
+        ]);
+
+        echo $feed;
+        exit;
     }
 
     public function _validateFields($fields)
     {
         $isValid = true;
-        if(!array_key_exists('title', $fields)) {
+        if (!array_key_exists('title', $fields)) {
             $isValid = false;
         }
-        if(!array_key_exists('title', $fields)) {
+        if (!array_key_exists('title', $fields)) {
             $isValid = false;
         }
-        if(!array_key_exists('id', $fields)) {
+        if (!array_key_exists('id', $fields)) {
             $isValid = false;
         }
-        if(!array_key_exists('description', $fields)) {
+        if (!array_key_exists('description', $fields)) {
             $isValid = false;
         }
-        if(!array_key_exists('image_link', $fields)) {
+        if (!array_key_exists('image_link', $fields)) {
             $isValid = false;
         }
-        if(!array_key_exists('brand', $fields)) {
+        if (!array_key_exists('brand', $fields)) {
             $isValid = false;
         }
-        if(!array_key_exists('price', $fields)) {
+        if (!array_key_exists('price', $fields)) {
             $isValid = false;
         }
-        if(!array_key_exists('currency', $fields)) {
+        if (!array_key_exists('currency', $fields)) {
             $isValid = false;
         }
-        if(!$isValid) {
-            if(Craft::$app->getConfig()->general->devMode) {
-                throw new InvalidValueException('Field settings incorrect');
-            } else {
-                return false;
-            }
-        }
-
+        return $isValid;
     }
 }
