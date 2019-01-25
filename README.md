@@ -1,6 +1,6 @@
 # Facebook Product Catalog
 
-Link your products with your Facebook page
+Get your products or entries into Facebook Catalog, on your Facebook page and on your Instagram account.
 
 ## Requirements
 
@@ -28,13 +28,13 @@ If you need more control over which products show up in the feed, or you want mu
 If you want to use the plugin with regular entries, want to provide your own Element query or want to have mulitple feeds, have a look at these function:
 
 ### Products - craft.catalog.products
-Works with any **Commerce Products** element query
+Works with any **Commerce Products** element query, and will use the default variant for each product
 
        {% set products = craft.products.limit(1) %}
        {{ craft.catalog.products(query) }}
 
 ### Entries - craft.catalog.entries
-Works with any elment query
+Works with any element query
 
        {% set query = craft.entries.section('books') %}
        {{ craft.catalog.entries(query) }}
