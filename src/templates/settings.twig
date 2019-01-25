@@ -1,0 +1,151 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Facebook Catalog plugin for Craft CMS 3.x
+ *
+ * Facebook Catalog Settings.twig
+ *
+ * @author    Studio Espresso
+ * @copyright Copyright (c) 2019 Studio Espresso
+ * @link      https://studioespresso.co/en
+ * @package   FacebookCatalog
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% set installed = craft.app.plugins.isPluginInstalled('commerce') %}
+
+{% if installed %}
+    <div class="field">
+        <h2>{{ 'Feed url' }}</h2>
+        {{ forms.textField({
+            label: 'Enter a URL for your products feed',
+            id: 'productsFeed',
+            name: 'productsFeed',
+            value: settings['productsFeed']}) }}
+        {% if craft.app.sites.getAllSites()|length > 1 %}
+            {% set availableSites = [] %}
+            {% for id, site in craft.app.sites.getAllSites() %}
+                {% set availableSites = availableSites|merge([{
+                    'label': site.name,
+                    'value': site.id
+                }]) %}
+            {% endfor %}
+            {{ forms.selectField({
+                label: "To which site should your products link?"|t('facebook-catalog'),
+                id: "siteId",
+                name: "siteId",
+                required: true,
+                options: availableSites,
+                value: settings['siteId'] ? settings['siteId'],
+                errors: settings.errors and settings.errors['siteId'] is defined ? settings.errors['siteId']
+            }) }}
+        {% endif %}
+    </div>
+    <div class="field">
+        <div class="heading">
+            <h2>{{ 'Map your product fields'|t('facebook-catalog') }}</h2>
+            <div class="instructions">
+                <p>{{ 'Note that each of these fields (for each product) are required for your Facebook Catalog to be valid.'|t('facebook-catalog') }}</p>
+                <p>{{ "See Facebook's documentation page on allow values & required fields <a href='{link}'>here</a>."|t({link: 'https://developers.facebook.com/docs/marketing-api/dynamic-product-ads/product-catalog/#required-fields'})|raw }}</p>
+            </div>
+        </div>
+    </div>
+
+    {% set availableFields = {
+        '' : '---',
+        'title' : 'Title',
+        'sku' : 'SKU',
+        'id' : 'Entry ID',
+        'price': 'Price',
+    } %}
+    {% for id, field in fields %}
+        {% set availableFields = availableFields|merge([{
+            'label': field.name,
+            'value': field.handle
+        }]) %}
+    {% endfor %}
+    {{ forms.selectField({
+        label: "Product id"|t('facebook-catalog'),
+        id: "id",
+        name: "id",
+        required: true,
+        options: availableFields,
+        value: settings['id'] ? settings['id'] : 'sku',
+        errors: settings.errors and settings.errors['id'] is defined ? settings.errors['id']
+    }) }}
+
+    {{ forms.selectField({
+        label: "Product title"|t('facebook-catalog'),
+        id: "title",
+        name: "title",
+        required: true,
+        options: availableFields,
+        value: settings['title'] ? settings['title'] : 'title',
+        errors: settings.errors and settings.errors['title'] is defined ? settings.errors['title']
+    }) }}
+
+    {{ forms.selectField({
+        label: "Product id"|t('facebook-catalog'),
+        id: "price",
+        name: "price",
+        required: true,
+        options: availableFields,
+        value: settings['price'] ? settings['price'] : 'price',
+        errors: settings.errors and settings.errors['price'] is defined ? settings.errors['price']
+    }) }}
+
+    {{ forms.selectField({
+        label: "Brand"|t('facebook-catalog'),
+        id: "brand",
+        name: "brand",
+        required: true,
+        options: availableFields,
+        value: settings['brand'],
+        errors: settings.errors and settings.errors['brand'] is defined ? settings.errors['brand']
+    }) }}
+
+    {{ forms.selectField({
+        label: "Product description"|t('facebook-catalog'),
+        id: "description",
+        name: "description",
+        required: true,
+        options: availableFields,
+        value: settings['description'],
+        errors: settings.errors and settings.errors['description'] is defined ? settings.errors['description']
+    }) }}
+
+    {{ forms.selectField({
+        label: "Image field"|t('facebook-catalog'),
+        id: "image_link",
+        name: "image_link",
+        required: true,
+        options: availableFields,
+        value: settings['image_link'],
+        errors: settings.errors and settings.errors['image_link'] is defined ? settings.errors['image_link']
+    }) }}
+
+
+    {% if craft.commerce.paymentCurrencies.getAllPaymentCurrencies()|length > 1 %}
+        {% set currencies = [] %}
+        {% for currency in craft.commerce.paymentCurrencies.getAllPaymentCurrencies() %}
+            {% set currencies = currencies|merge([{
+                'label': currency.iso,
+                'value': currency.iso
+            }]) %}
+        {% endfor %}
+        {{ forms.selectField({
+            label: "Image field"|t('facebook-catalog'),
+            id: "currencyIso",
+            name: "currencyIso",
+            required: true,
+            options: currencies,
+            value: settings['currencyIso'],
+            errors: settings.errors and settings.errors['currencyIso'] is defined ? settings.errors['currencyIso']
+        }) }}
+    {% endif %}
+{% else %}
+    <h2>{{ 'Craft Commerce not installed'|t }}</h2>
+{% endif %}

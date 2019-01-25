@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+    <channel>
+        {% for entry in entries %}
+            <item>
+                <g:id>{{ attribute(entry, settings.id) }}</g:id>
+                <g:title>{{ attribute(entry, settings.title) }}</g:title>
+                <g:description>{{ attribute(entry, settings.description) }}</g:description>
+                <g:link>{{ entry.getUrl() }}</g:link>
+                {% set imageLink = attribute(entry, settings.image_link) %}
+                {% if imageLink|length %}
+                    <g:image_link>{{ imageLink.one().getUrl() }}</g:image_link>
+                {% endif %}
+                <g:brand>{{ attribute(entry, settings.brand) }}</g:brand>
+                <g:condition>new</g:condition>
+                <g:availability>in stock</g:availability>
+                <g:price>{{ attribute(entry, settings.price) }} {{ settings.currency }}</g:price>
+            </item>
+        {% endfor %}
+    </channel>
+</rss>
