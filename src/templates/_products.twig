@@ -21,7 +21,22 @@
                 {% if imageLink|length %}
                     <g:image_link>{{ imageLink.one().getUrl() }}</g:image_link>
                 {% endif %}
-                <g:brand>{{ attribute(product, settings.brand) }}</g:brand>
+                {% if attribute(product, settings.brand) is instance of('craft\\elements\\db\\CategoryQuery') %}
+                    {% if attribute(product, settings.brand)|length %}
+                        {% set brand = attribute(product, settings.brand).one().title %}
+                    {% else %}
+                        {% set brand = '' %}
+                    {% endif %}
+                {% elseif attribute(product, settings.brand) is instance of('craft\\elements\\db\\EntryQuery') %}
+                    {% if attribute(product, settings.brand)|length %}
+                        {% set brand = attribute(product, settings.brand).one().title %}
+                    {% else %}
+                        {% set brand = '' %}
+                    {% endif %}
+                {% else %}
+                    {% set brand = attribute(product, settings.brand) %}
+                {% endif %}
+                <g:brand>{{ brand }}</g:brand>
                 <g:condition>new</g:condition>
                 {% if product.defaultVariant.hasUnlimitedStock %}
                     <g:availability>in stock</g:availability>
