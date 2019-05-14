@@ -15,7 +15,7 @@
                     {% endif %}
                 </g:id>
                 <g:title>{{ attribute(product, settings.title) }}</g:title>
-                <g:description>{{ attribute(product, settings.description) }}</g:description>
+                <g:description>{{ attribute(product, settings.description)|striptags }}</g:description>
                 <g:link>{{ product.getUrl() }}</g:link>
                 {% set imageLink = attribute(product, settings.image_link) %}
                 {% if imageLink|length %}
@@ -40,6 +40,10 @@
                 <g:condition>new</g:condition>
                 {% if product.defaultVariant.hasUnlimitedStock %}
                     <g:availability>in stock</g:availability>
+                {% elseif product.defaultVariant.stock > 0 %}
+                    <g:availability>in stock</g:availability>
+                {% else %}
+                    <g:availability>out of stock</g:availability>
                 {% endif %}
                 {% if craft.commerce.paymentCurrencies.getAllPaymentCurrencies()|length == 1 %}
                     {% set currency = craft.commerce.paymentCurrencies.getPrimaryPaymentCurrencyIso() %}
