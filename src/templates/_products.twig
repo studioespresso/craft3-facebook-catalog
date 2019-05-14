@@ -40,8 +40,10 @@
                 <g:condition>new</g:condition>
                 {% if product.defaultVariant.hasUnlimitedStock %}
                     <g:availability>in stock</g:availability>
+                {% elseif product.defaultVariant.stock > 0 %}
+                    <g:availability>in stock</g:availability>
                 {% else %}
-                    <g:availability>{{ product.defaultVariant.stock }}</g:availability>
+                    <g:availability>out of stock</g:availability>
                 {% endif %}
                 {% if craft.commerce.paymentCurrencies.getAllPaymentCurrencies()|length == 1 %}
                     {% set currency = craft.commerce.paymentCurrencies.getPrimaryPaymentCurrencyIso() %}
