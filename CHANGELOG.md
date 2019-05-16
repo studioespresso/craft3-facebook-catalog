@@ -3,10 +3,11 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## 1.1.1 - 2019-05-14
 
 ## Fixed
-- Products with limited stock now show the actual stock count in the feed
+- Products with limited stock now also show in stock or out of stock in the feed
+- HTML tags are now stripped from the description field
 
 ## 1.1.0 - 2019-05-09
 ### Added

@@ -5,7 +5,7 @@
             <item>
                 <g:id>{{ attribute(entry, settings.id) }}</g:id>
                 <g:title>{{ attribute(entry, settings.title) }}</g:title>
-                <g:description>{{ attribute(entry, settings.description) }}</g:description>
+                <g:description>{{ attribute(entry, settings.description)|striptags }}</g:description>
                 <g:link>{{ entry.getUrl() }}</g:link>
                 {% set imageLink = attribute(entry, settings.image_link) %}
                 {% if imageLink|length %}
