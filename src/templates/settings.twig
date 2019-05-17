@@ -67,11 +67,16 @@
             'value': field.handle
         }]) %}
     {% endfor %}
+    {% set availableFields = availableFields|merge([{
+        'label': 'Custom value',
+        'value': 'custom'
+    }]) %}
     {{ forms.selectField({
         label: "Product id"|t('facebook-catalog'),
         id: "id",
         name: "id",
         required: true,
+        toggle: true,
         options: availableFields,
         value: settings['id'] ? settings['id'] : 'sku',
         errors: settings.errors and settings.errors['id'] is defined ? settings.errors['id']
@@ -97,15 +102,26 @@
         errors: settings.errors and settings.errors['price'] is defined ? settings.errors['price']
     }) }}
 
-    {{ forms.selectField({
-        label: "Brand"|t('facebook-catalog'),
-        id: "brand",
-        name: "brand",
-        required: true,
-        options: availableFields,
-        value: settings['brand'],
-        errors: settings.errors and settings.errors['brand'] is defined ? settings.errors['brand']
-    }) }}
+    <div class="js-catalog-field">
+        {{ forms.selectField({
+            label: "Brand"|t('facebook-catalog'),
+            id: "brand",
+            name: "brand",
+            required: true,
+            options: availableFields,
+            value: settings['brand'],
+            errors: settings.errors and settings.errors['brand'] is defined ? settings.errors['brand']
+        }) }}
+        <div class="custom{% if settings['brand'] != 'custom' %} hidden {% endif %} narrow">
+            {{ forms.textField({
+                label: "Fixed brand value"|t('facebook-catalog'),
+                id: "brandCustom",
+                name: "brandCustom",
+                value: settings['brandCustom'],
+                errors: settings.errors and settings.errors['brandCustom'] is defined ? settings.errors['brandCustom']
+            }) }}
+        </div>
+    </div>
 
     {{ forms.selectField({
         label: "Product description"|t('facebook-catalog'),
@@ -149,3 +165,25 @@
 {% else %}
     <h2>{{ 'Craft Commerce not installed'|t }}</h2>
 {% endif %}
+
+{% css %}
+    .hidden {
+        display: none;
+    }
+    .narrow {
+        width: 50%;
+    }
+{% endcss %}
+
+{% js at endBody %}
+    $('.js-catalog-field').each(function(){
+        $wrapper = $(this);
+        $select = $wrapper.find('select');
+        $select.on('change', function() {
+            if(this.value === 'custom') {
+                $custom = $wrapper.children('.custom');
+                $custom.show();
+            }
+        });
+    });
+{% endjs %}

@@ -21,7 +21,9 @@
                 {% if imageLink|length %}
                     <g:image_link>{{ imageLink.one().getUrl() }}</g:image_link>
                 {% endif %}
-                {% if attribute(product, settings.brand) is instance of('craft\\elements\\db\\CategoryQuery') %}
+                {% if settings.brand == 'custom' %}
+                    {% set brand = settings.brandCustom %}
+                {% elseif attribute(product, settings.brand) is instance of('craft\\elements\\db\\CategoryQuery') %}
                     {% if attribute(product, settings.brand)|length %}
                         {% set brand = attribute(product, settings.brand).one().title %}
                     {% else %}
