@@ -46,6 +46,8 @@ class Settings extends Model
 
     public $brand;
 
+    public $brandCustom;
+
     public $currencyIso;
 
     // Public Methods
