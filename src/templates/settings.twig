@@ -61,16 +61,18 @@
         'id' : 'Entry ID',
         'price': 'Price',
     } %}
+
     {% for id, field in fields %}
-        {% set availableFields = availableFields|merge([{
-            'label': field.name,
-            'value': field.handle
-        }]) %}
+        {% set value = field.handle %}
+        {% set availableFields = availableFields|merge({
+            (field.handle) : field.name,
+        }) %}
     {% endfor %}
-    {% set availableFields = availableFields|merge([{
-        'label': 'Custom value',
-        'value': 'custom'
-    }]) %}
+
+    {% set availableFieldsCustom = availableFields|merge({
+        'custom': 'Custom value',
+    }) %}
+
     {{ forms.selectField({
         label: "Product id"|t('facebook-catalog'),
         id: "id",
@@ -108,7 +110,7 @@
             id: "brand",
             name: "brand",
             required: true,
-            options: availableFields,
+            options: availableFieldsCustom,
             value: settings['brand'],
             errors: settings.errors and settings.errors['brand'] is defined ? settings.errors['brand']
         }) }}
