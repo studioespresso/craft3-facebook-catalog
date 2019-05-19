@@ -50,6 +50,10 @@ class Settings extends Model
 
     public $currencyIso;
 
+    public $googleProductCategory;
+
+    public $googleProductCategoryCustom;
+
     // Public Methods
     // =========================================================================
 

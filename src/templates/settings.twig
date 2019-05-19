@@ -184,6 +184,17 @@
             errors: settings.errors and settings.errors['currencyIso'] is defined ? settings.errors['currencyIso']
         }) }}
     {% endif %}
+    <input type="hidden" name="googleProductCategory" value="custom">
+    {{ forms.textField({
+        label: "Google product category ID"|t('facebook-catalog'),
+        instructions: "Possible values can be found <a href='{link}'>here</a>. You can use the ID of the full category name."|t({link: "https://support.google.com/merchants/answer/6324436?hl=en"}),
+        id: "googleProductCategoryCustom",
+        name: "googleProductCategoryCustom",
+        required: false,
+        class: 'narrow',
+        value: settings['googleProductCategoryCustom'],
+        errors: settings.errors and settings.errors['googleProductCategoryCustom'] is defined ? settings.errors['googleProductCategoryCustom']
+    }) }}
 {% else %}
     <h2>{{ 'Craft Commerce not installed'|t }}</h2>
 {% endif %}

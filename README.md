@@ -50,7 +50,8 @@ An optional second parameter can be added with that contains these fixed field n
             image_link: 'fieldHandle',
             brand: 'fieldHandle',
             price: 'fieldHandle',
-            currency: 'USD' // ISO code of the currency you want to use
+            currency: 'USD' // ISO code of the currency you want to use,
+            google_product_category: 'fieldHandle'
        }) }}
 
 If each of these fields are not pressent in the array, the feed will fail to validated and throw an expection. 
