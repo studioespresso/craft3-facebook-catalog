@@ -105,25 +105,45 @@
     }) }}
 
     <div class="js-catalog-field">
-        {{ forms.selectField({
-            label: "Brand"|t('facebook-catalog'),
-            id: "brand",
-            name: "brand",
-            required: true,
-            options: availableFieldsCustom,
-            value: settings['brand'],
-            errors: settings.errors and settings.errors['brand'] is defined ? settings.errors['brand']
-        }) }}
-        <div class="custom{% if settings['brand'] != 'custom' %} hidden {% endif %} narrow">
-            {{ forms.textField({
-                label: "Fixed brand value"|t('facebook-catalog'),
-                id: "brandCustom",
-                name: "brandCustom",
-                value: settings['brandCustom'],
-                errors: settings.errors and settings.errors['brandCustom'] is defined ? settings.errors['brandCustom']
-            }) }}
+        <div class="field" id="settings-brand-field">
+            <div class="heading">
+                <label id="brand-label" class="required" for="settings-brand">{{ "Brand"|t }}</label>
+            </div>
+            <div class="input ltr">
+                <div class="select">
+                    <select id="brand" name="brand">
+                        {% for value, label in availableFieldsCustom %}
+                            <option value="{{ value }}" {% if settings['brand'] == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+            </div>
+        </div>
+        <div id="brand-custom" class="narrow" {% if settings['brand'] != 'custom' %}style="display: none;"{% endif %}>
+            <div class="field" id="brandCustom-field">
+                <div class="heading">
+                    <label id="brandCustom-label" {% if settings['brand'] == 'custom' %}class="required"{% endif %} for="brandCustom">{{ "Fixed brand value"|t }}</label>
+                </div>
+                <div class="input ltr">
+                    <input class="text fullwidth" type="text" id="brandCustom" name="brandCustom" {% if settings['brand'] == 'custom' %}required{% endif %} {% if settings['brand'] == 'custom' %}value="{{ settings['brandCustom'] }}"{% endif %} autocomplete="off">
+                </div>
+            </div>
         </div>
     </div>
+    {% js at endBody %}
+        $('#settings-brand').change(function(){
+            console.log(this.value);
+            if(this.value == 'custom') {
+                console.log("hier");
+                $('#settings-brand-custom').show();
+                $('#settings-brandCustom-label').addClass('required');
+                $('#settings-brandCustom').prop('required', true);
+            } else {
+                $('#settings-brand-custom').hide();
+            }
+        });
+    {% endjs %}
 
     {{ forms.selectField({
         label: "Product description"|t('facebook-catalog'),
@@ -177,15 +197,3 @@
     }
 {% endcss %}
 
-{% js at endBody %}
-    $('.js-catalog-field').each(function(){
-        $wrapper = $(this);
-        $select = $wrapper.find('select');
-        $select.on('change', function() {
-            if(this.value === 'custom') {
-                $custom = $wrapper.children('.custom');
-                $custom.show();
-            }
-        });
-    });
-{% endjs %}
