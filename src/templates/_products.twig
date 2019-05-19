@@ -53,6 +53,9 @@
                 {% else %}
                     <g:price>{{ attribute(product.defaultVariant, settings.price) }} {{ settings.currencyIso }}</g:price>
                 {% endif %}
+                {% if settings.googleProductCategory == 'custom' %}
+                <g:google_product_category>{{ settings.googleProductCategoryCustom|striptags }}</g:google_product_category>
+                {% endif %}
             </item>
         {% endfor %}
     </channel>

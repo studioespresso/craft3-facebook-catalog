@@ -15,6 +15,7 @@
                 <g:condition>new</g:condition>
                 <g:availability>in stock</g:availability>
                 <g:price>{{ attribute(entry, settings.price) }} {{ settings.currency }}</g:price>
+                <g:google_product_category>{{ attribute(entry, settings.google_product_categoryCustom) }}</g:google_product_category>
             </item>
         {% endfor %}
     </channel>

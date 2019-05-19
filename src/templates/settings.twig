@@ -61,16 +61,18 @@
         'id' : 'Entry ID',
         'price': 'Price',
     } %}
+
     {% for id, field in fields %}
-        {% set availableFields = availableFields|merge([{
-            'label': field.name,
-            'value': field.handle
-        }]) %}
+        {% set value = field.handle %}
+        {% set availableFields = availableFields|merge({
+            (field.handle) : field.name,
+        }) %}
     {% endfor %}
-    {% set availableFields = availableFields|merge([{
-        'label': 'Custom value',
-        'value': 'custom'
-    }]) %}
+
+    {% set availableFieldsCustom = availableFields|merge({
+        'custom': 'Custom value',
+    }) %}
+
     {{ forms.selectField({
         label: "Product id"|t('facebook-catalog'),
         id: "id",
@@ -103,25 +105,45 @@
     }) }}
 
     <div class="js-catalog-field">
-        {{ forms.selectField({
-            label: "Brand"|t('facebook-catalog'),
-            id: "brand",
-            name: "brand",
-            required: true,
-            options: availableFields,
-            value: settings['brand'],
-            errors: settings.errors and settings.errors['brand'] is defined ? settings.errors['brand']
-        }) }}
-        <div class="custom{% if settings['brand'] != 'custom' %} hidden {% endif %} narrow">
-            {{ forms.textField({
-                label: "Fixed brand value"|t('facebook-catalog'),
-                id: "brandCustom",
-                name: "brandCustom",
-                value: settings['brandCustom'],
-                errors: settings.errors and settings.errors['brandCustom'] is defined ? settings.errors['brandCustom']
-            }) }}
+        <div class="field" id="settings-brand-field">
+            <div class="heading">
+                <label id="brand-label" class="required" for="settings-brand">{{ "Brand"|t }}</label>
+            </div>
+            <div class="input ltr">
+                <div class="select">
+                    <select id="brand" name="brand">
+                        {% for value, label in availableFieldsCustom %}
+                            <option value="{{ value }}" {% if settings['brand'] == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+            </div>
+        </div>
+        <div id="brand-custom" class="narrow" {% if settings['brand'] != 'custom' %}style="display: none;"{% endif %}>
+            <div class="field" id="brandCustom-field">
+                <div class="heading">
+                    <label id="brandCustom-label" {% if settings['brand'] == 'custom' %}class="required"{% endif %} for="brandCustom">{{ "Fixed brand value"|t }}</label>
+                </div>
+                <div class="input ltr">
+                    <input class="text fullwidth" type="text" id="brandCustom" name="brandCustom" {% if settings['brand'] == 'custom' %}required{% endif %} {% if settings['brand'] == 'custom' %}value="{{ settings['brandCustom'] }}"{% endif %} autocomplete="off">
+                </div>
+            </div>
         </div>
     </div>
+    {% js at endBody %}
+        $('#settings-brand').change(function(){
+            console.log(this.value);
+            if(this.value == 'custom') {
+                console.log("hier");
+                $('#settings-brand-custom').show();
+                $('#settings-brandCustom-label').addClass('required');
+                $('#settings-brandCustom').prop('required', true);
+            } else {
+                $('#settings-brand-custom').hide();
+            }
+        });
+    {% endjs %}
 
     {{ forms.selectField({
         label: "Product description"|t('facebook-catalog'),
@@ -162,6 +184,17 @@
             errors: settings.errors and settings.errors['currencyIso'] is defined ? settings.errors['currencyIso']
         }) }}
     {% endif %}
+    <input type="hidden" name="googleProductCategory" value="custom">
+    {{ forms.textField({
+        label: "Google product category ID"|t('facebook-catalog'),
+        instructions: "Possible values can be found <a href='{link}' target='_blank'>here</a>. You can use the ID of the full category name."|t({link: "https://support.google.com/merchants/answer/6324436?hl=en"}),
+        id: "googleProductCategoryCustom",
+        name: "googleProductCategoryCustom",
+        required: false,
+        class: 'narrow',
+        value: settings['googleProductCategoryCustom'],
+        errors: settings.errors and settings.errors['googleProductCategoryCustom'] is defined ? settings.errors['googleProductCategoryCustom']
+    }) }}
 {% else %}
     <h2>{{ 'Craft Commerce not installed'|t }}</h2>
 {% endif %}
@@ -175,15 +208,3 @@
     }
 {% endcss %}
 
-{% js at endBody %}
-    $('.js-catalog-field').each(function(){
-        $wrapper = $(this);
-        $select = $wrapper.find('select');
-        $select.on('change', function() {
-            if(this.value === 'custom') {
-                $custom = $wrapper.children('.custom');
-                $custom.show();
-            }
-        });
-    });
-{% endjs %}
