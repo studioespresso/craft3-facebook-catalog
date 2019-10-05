@@ -1,0 +1,27 @@
+actor: Tester
+paths:
+    tests: tests
+    log: tests/_output
+    data: tests/_data
+    support: tests/_support
+    envs: tests/_envs
+bootstrap: _bootstrap.php
+params:
+    - tests/.env
+modules:
+    config:
+        \craft\test\Craft:
+            configFile: 'tests/_craft/config/test.php'
+            entryUrl: 'http://craft33.local/index.php'
+            projectConfig: {}
+            migrations: []
+            plugins:
+                google-shopping-feed:
+                    class: '\studioespresso\facebookcatalog\FacebookCatalog'
+                    handle: facebook-catalog
+                commerce:
+                    class: 'craft\commerce\Plugin'
+                    handle: commerce
+            cleanup: true
+            transaction: true
+            dbSetup: {clean: true, setupCraft: true}
