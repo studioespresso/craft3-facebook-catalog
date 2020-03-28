@@ -41,7 +41,7 @@ Works with any element query
 
 Both function take an `ElementQuery` as first parameter and will use the fields mapped in the plugin settings.
 
-An optional second parameter can be added with that contains these fixed field names and the names of the entry fields to which you want to map them.
+A second parameter (required) can be added with that contains these fixed field names and the names of the entry fields to which you want to map them.
        
        {{ craft.catalog.entries(products, {
             title: 'fieldHandle',
@@ -51,7 +51,7 @@ An optional second parameter can be added with that contains these fixed field n
             brand: 'fieldHandle',
             price: 'fieldHandle',
             currency: 'USD' // ISO code of the currency you want to use,
-            google_product_category: 'fieldHandle'
+            googleProductCategory: 'fieldHandle'
        }) }}
 
 If each of these fields are not pressent in the array, the feed will fail to validated and throw an expection. 
