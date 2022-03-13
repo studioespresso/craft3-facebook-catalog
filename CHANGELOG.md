@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0 - 2022-03-13
+### Added
+- Craft 4 compatibility
+
 ## 1.2.0 - 2019-05-19
 ### Added
 - The `brand` option can now be site to a fixed value in settings
