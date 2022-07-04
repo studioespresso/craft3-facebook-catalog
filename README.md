@@ -1,3 +1,7 @@
+# This plugin has retired! - July 2022
+
+I've decided to retire this plugin since it's use is pretty limited in the best case. These days it's just as easy to create a template, query products yourself and have an RSS feed that is more customizable and better suited to your specific needs. The Craft 4 version is out so there is an upgrade path from 3 to 4.
+
 # Facebook Product Catalog
 
 Get your products or entries into Facebook Catalog, on your Facebook page and on your Instagram account.
